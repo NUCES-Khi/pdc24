@@ -1,5 +1,5 @@
 # Road to matrix matrix multiplication.
-
+#### NOTE: All code must be extensively commented, well formatted and indented. Be consistent and use either camelCase or snake_case. 
 ## Aim:
 - The aim of this assignment is to learn parallel algorithm design on Omp and MPI
 - Benchmark algorithms
