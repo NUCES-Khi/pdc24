@@ -7,11 +7,8 @@
 |k20-2143|Sajjaad Sajid|
 
 ## Assingment 1 ##
-1. Issue 1: Blah blah .....
-    - Solution1: tried to blah blahb
-    - Solution2: treid to blab blah
-    - **Resolved**
-3. Issue 2: Blah blah blah ....
-    - Solution1: tried to blah blahb
-    - Solution2: treid to blab blah
-    - **Resolved**
+Status: **In progress**
+//--Change the status to complete once your assignment is completed and you think it can be marked. --//
+
+## Assignment 2 ##
+Status: **Not assigned yet**
