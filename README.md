@@ -3,9 +3,9 @@
 ## Team Members
 |std_id|Name|
 |--------|-|
-|k20-1234|Amjad Sajid|
-|k20-4321|Majid Sajid|
-|k20-2143|Sajjaad Sajid|
+|k19-1406|owais danish|
+|k19-0317|muhammad rooman|
+|k19-0340|sohaib khan|
 
 ## Assingment 1 ##
 Status: **In progress**
