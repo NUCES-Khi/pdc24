@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <mpi.h>
+#include "mpi.h"
 
 double* allocate_vector(int size) {
     double* vector = (double*)malloc(size * sizeof(double));
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 
     if (argc != 3) {
         if (rank == 0) {
-            printf("Usage: %s <matrix_size> <vector_size>\n", argv[0]);
+            fprintf(stderr, "Please add two integers from cmd", argv[0]);
         }
         MPI_Finalize();
         return 1;
@@ -79,8 +79,10 @@ int main(int argc, char *argv[]) {
     if (rank == 0) {
         for (int i = 0; i < matrix_size; i++) {
             printf("%.2f ", result[i]);
+            if ((i + 1) % vector_size == 0) {
+                printf("\n");
+            }
         }
-        printf("\n");
         free(vector);
         free(result);
         for (int i = 0; i < matrix_size; i++) {
@@ -95,4 +97,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
