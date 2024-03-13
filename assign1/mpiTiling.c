@@ -49,7 +49,7 @@ int main(int argc, char *argv[]) {
 
     if (argc != 3) {
         if (rank == 0) {
-            printf("Usage: %s <matrix_size> <vector_size>\n", argv[0]);
+            fprintf(stderr, "Usage: %s <matrix_size> <vector_size>\n", argv[0]);
         }
         MPI_Finalize();
         return 1;
@@ -81,10 +81,18 @@ int main(int argc, char *argv[]) {
     matvec_multiply(local_matrix, vector, local_result, matrix_size, vector_size, local_rows, rank);
 
     if (rank == 0) {
+        // Gather results from all processes
+        MPI_Gather(local_result, local_rows, MPI_DOUBLE, result, local_rows, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+
+        // Print the resulting vector in matrix form
         for (int i = 0; i < matrix_size; i++) {
             printf("%.2f ", result[i]);
+            if ((i + 1) % vector_size == 0) {
+                printf("\n");
+            }
         }
-        printf("\n");
+
+        // Free allocated memory
         free(vector);
         free(result);
         for (int i = 0; i < matrix_size; i++) {
@@ -93,6 +101,7 @@ int main(int argc, char *argv[]) {
         free(matrix);
     }
 
+    // Free local memory
     free(local_matrix);
     free(local_result);
 
@@ -100,4 +109,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
