@@ -5,6 +5,7 @@
 |--------|-|
 |k19-1406|owais danish|
 |k19-0317|muhammad rooman|
+|k19-0340|sohaib khan|
 
 
 ## Assingment 1 ##
