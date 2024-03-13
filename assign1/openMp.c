@@ -3,59 +3,66 @@
 #include <omp.h>
 
 double** allocate_matrix(int rows, int cols) {
-    double** mat = (double**)malloc(rows * sizeof(double*));
+    double** matrix = (double**)malloc(rows * sizeof(double*));
     for (int i = 0; i < rows; i++) {
-        mat[i] = (double*)malloc(cols * sizeof(double));
+        matrix[i] = (double*)malloc(cols * sizeof(double));
     }
-    return mat;
+    return matrix;
 }
 
 double* allocate_vector(int size) {
-    double* vec = (double*)malloc(size * sizeof(double));
-    return vec;
+    double* vector = (double*)malloc(size * sizeof(double));
+    return vector;
 }
 
-void initialize(double** mat, double* vec, int rows, int cols) {
+void initialize(double** matrix, double* vector, int rows, int cols) {
     #pragma omp parallel for collapse(2)
     for (int i = 0; i < rows; i++) {
         for (int j = 0; j < cols; j++) {
-            mat[i][j] = (double)rand() / RAND_MAX;
+            matrix[i][j] = (double)rand() / RAND_MAX;
         }
     }
     #pragma omp parallel for
     for (int i = 0; i < cols; i++) {
-        vec[i] = (double)rand() / RAND_MAX;
+        vector[i] = (double)rand() / RAND_MAX;
     }
 }
 
-void matvec_multiply(double** mat, double* vec, double* result, int rows, int cols) {
+void matrix_vector_multiply(double** matrix, double* vector, double* result, int rows, int cols) {
     #pragma omp parallel for
     for (int i = 0; i < rows; i++) {
         result[i] = 0.0;
         for (int j = 0; j < cols; j++) {
-            result[i] += mat[i][j] * vec[j];
+            result[i] += matrix[i][j] * vector[j];
         }
     }
 }
 
 int main(int argc, char *argv[]) {
     if (argc != 3) {
-        printf("Usage: %s <matrix_size> <vector_size>\n", argv[0]);
+        fprintf(stderr, "Please provide two integers as command-line arguments.\n");
         return 1;
     }
 
-    int matrix_size = atoi(argv[1]);
+    int matrix_rows = atoi(argv[1]);
     int vector_size = atoi(argv[2]);
 
-    double** matrix = allocate_matrix(matrix_size, vector_size);
+    double** matrix = allocate_matrix(matrix_rows, vector_size);
     double* vector = allocate_vector(vector_size);
-    double* result = allocate_vector(matrix_size);
+    double* result = allocate_vector(matrix_rows);
 
-    initialize(matrix, vector, matrix_size, vector_size);
+    initialize(matrix, vector, matrix_rows, vector_size);
 
-    matvec_multiply(matrix, vector, result, matrix_size, vector_size);
+    matrix_vector_multiply(matrix, vector, result, matrix_rows, vector_size);
 
-    for (int i = 0; i < matrix_size; i++) {
+    // Print the result in matrix form
+    printf("Result of matrix-vector multiplication:\n");
+    for (int i = 0; i < matrix_rows; i++) {
+        printf("| %f |\n", result[i]);
+    }
+
+    // Free allocated memory
+    for (int i = 0; i < matrix_rows; i++) {
         free(matrix[i]);
     }
     free(matrix);
@@ -64,5 +71,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
-
