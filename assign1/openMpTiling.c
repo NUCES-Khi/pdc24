@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
@@ -44,26 +43,30 @@ void matvec_multiply(double** matrix, double* vector, double* result, int rows, 
         }
     }
 }
-
 int main(int argc, char *argv[]) {
     if (argc != 3) {
         printf("Usage: %s <matrix_size> <vector_size>\n", argv[0]);
         return 1;
     }
 
-    int matrix_size = atoi(argv[1]);
-    int vector_size = atoi(argv[2]);
+    int matrixSize = atoi(argv[1]);
+    int vectorSize = atoi(argv[2]);
 
-    double** matrix = allocate_matrix(matrix_size, vector_size);
-    double* vector = allocate_vector(vector_size);
-    double* result = allocate_vector(matrix_size);
+    double** matrix = allocate_matrix(matrixSize, vectorSize);
+    double* vector = allocate_vector(vectorSize);
+    double* result = allocate_vector(matrixSize);
 
-    initialize(matrix, vector, matrix_size, vector_size);
+    initialize(matrix, vector, matrixSize, vectorSize);
 
-    matvec_multiply(matrix, vector, result, matrix_size, vector_size);
+    matvec_multiply(matrix, vector, result, matrixSize, vectorSize);
 
-  
-    for (int i = 0; i < matrix_size; i++) {
+    // Print the result in matrix form
+    printf("Resultant vector:\n");
+    for (int i = 0; i < matrixSize; i++) {
+        printf("| %.6f |\n", result[i]);
+    }
+
+    for (int i = 0; i < matrixSize; i++) {
         free(matrix[i]);
     }
     free(matrix);
@@ -72,4 +75,3 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
-
