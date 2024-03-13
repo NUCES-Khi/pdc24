@@ -2,9 +2,9 @@
 ## Team Members
 |std_id|Name|
 |--------|-|
-|k20-1234|Amjad Sajid|
-|k20-4321|Majid Sajid|
-|k20-2143|Sajjaad Sajid|
+|k21-3084|Muneer Raza|
+|k21-4739|Zainab Irshad|
+|k21-3076|Abdul Rafay|
 
 ## Assingment 1 ##
 Status: **In progress**
